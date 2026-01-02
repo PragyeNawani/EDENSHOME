@@ -1,11 +1,22 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import { Tagesschrift,  Pacifico } from 'next/font/google'
+const tagesschrift = Tagesschrift({
+  subsets: ['latin'],
+  weight: '400', // adjust if needed
+  variable: '--font-tagesschrift',
+  display: 'swap',
+})
+const pacifico = Pacifico({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-pacifico',
+  display: 'swap',
+})
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -20,7 +31,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased ${tagesschrift.variable} ${pacifico.variable}`}
       >
         {children}
       </body>

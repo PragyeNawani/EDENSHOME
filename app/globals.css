@@ -24,3 +24,9 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+.launching {
+  font-family: var(--font-tagesschrift), sans-serif;
+}
+.launchingdesc{
+  font-family: var(--font-pacifico), cursive;
+}
