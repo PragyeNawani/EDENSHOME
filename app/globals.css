@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.launching {
+  font-family: var(--font-tagesschrift), sans-serif;
+}
+
+.launchingdesc {
+  font-family: var(--font-pacifico), cursive;
+}
+
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  background-image: url('https://hostyapp.com/wp-content/uploads/2020/06/Airbnb-Property-to-Buy-1200x423.jpg');
+  background-size: cover;
+  background-position: bottom;
+}
+
+.overlay-left {
+  position: absolute;
+  height: 60%;
+  width: 33%;
+  top: 0;
+  left: 0;
+  background-color: #FFF7EC;
+}
+
+.overlay-center {
+  position: absolute;
+  height: 40%;
+  width: 33%;
+  top: 0;
+  left: 49%;
+  transform: translateX(-50%);
+  background-color: #FFF7EC;
+}
+
+.overlay-text {
+  position: relative;
+  z-index: 2;
+  font-size: 24px;
+  font-weight: 600;
+  color: #2c1b10;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
