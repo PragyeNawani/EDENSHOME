@@ -35,7 +35,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <div className="hero-container rounded-2xl w-[60%] order-2 hidden md:block w-full xl:w-[60%] sm:order-1 overflow-hidden">
+    <div className="hero-container h-full rounded-2xl w-[60%] order-2 hidden md:block w-full xl:w-[60%] sm:order-1 overflow-hidden">
       {/* Current Image */}
       <div 
         className="absolute inset-0 transition-transform duration-700 ease-in-out"

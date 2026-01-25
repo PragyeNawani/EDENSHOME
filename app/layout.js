@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased ${tagesschrift.variable} ${pacifico.variable}`}
       >
-        <Navbar/>
+        <Navbar/> 
         {children}
       </body>
     </html>
