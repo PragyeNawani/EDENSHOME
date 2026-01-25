@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Tagesschrift,  Pacifico } from 'next/font/google'
+import Navbar from "@/components/Navbar";
 const tagesschrift = Tagesschrift({
   subsets: ['latin'],
   weight: '400', // adjust if needed
@@ -33,6 +34,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased ${tagesschrift.variable} ${pacifico.variable}`}
       >
+        <Navbar/>
         {children}
       </body>
     </html>

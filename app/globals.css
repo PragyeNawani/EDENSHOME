@@ -1,32 +1,80 @@
-@import "tailwindcss";
+  @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @font-face {
+    font-family: "MyFont";
+    src: url("/fonts/Fontspring-DEMO-theseasons-bd.otf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
   }
-}
+  * { 
+    padding: 0;
+    margin: 0;
+  }
+  .heromainheading {
+    font-family: "MyFont", sans-serif;
+  }
+  .expfont {
+    font-family: "MyFont", sans-serif;
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-.launching {
-  font-family: var(--font-tagesschrift), sans-serif;
-}
-.launchingdesc{
-  font-family: var(--font-pacifico), cursive;
-}
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .launching {
+    font-family: var(--font-tagesschrift), sans-serif;
+  }
+
+  .launchingdesc {
+    font-family: var(--font-pacifico), cursive;
+  }
+  .glassmorph {
+    box-shadow: inset 0 0 50px rgb(255, 211, 146);
+  }
+  .hero-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background-image: url('https://hostyapp.com/wp-content/uploads/2020/06/Airbnb-Property-to-Buy-1200x423.jpg');
+    background-size: cover;
+    background-position: bottom;
+    
+  }
+  .hero-container2 {
+    position: relative;
+    background-image: url('https://hostyapp.com/wp-content/uploads/2020/06/Airbnb-Property-to-Buy-1200x423.jpg');
+    background-size: cover;
+    background-position: bottom;
+    
+  }
+
+  .overlay-left {
+    position: absolute;
+    height: 45%;
+    width: 45%;
+    top: 0;
+    left: 0;
+    background-color: #241705;
+  }
+
+  .overlay-center {
+    position: absolute;
+    height: 20%;
+    width: 33%;
+    top: 0;
+    left: 65%;
+    transform: translateX(-70%);
+    background-color: #241705;
+  }
+
+  .overlay-text {
+    position: relative;
+    z-index: 2;
+    font-size: 24px;
+    font-weight: 600;
+    color: #2c1b10;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
