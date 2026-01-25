@@ -44,7 +44,7 @@ export default function EdensHome() {
   }, []);
 
   return (
-    <div className="min-h-screen relative overflow-x-hidden w-full" style={{ backgroundColor: '#241705' }}>
+    <div className="min-h-screen relative overflow-x-hidden" style={{ backgroundColor: '#241705' }}>
       <div className='w-[200px] h-[200px] bg-[#FCE8CA] absolute left-0 z-3 blur-[150px]'></div>
       <div className='w-[200px] h-[200px] bg-[#FCE8CA] absolute bottom-0 right-0 z-3 blur-[150px]'></div>
       {/* Glassmorphism Cursor
@@ -66,7 +66,7 @@ export default function EdensHome() {
 
       {/* Main Content */}
       <div className="relative px-4 sm:px-8 lg:px-16 py-24 sm:py-20 mt-3">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl w-full mx-auto">
           <div className="flex flex-col xl:flex-row gap-8 items-start">
             {/* Left Side - Text Content - Hidden on mobile, visible from tablet (md) onwards */}
               <HeroSection />

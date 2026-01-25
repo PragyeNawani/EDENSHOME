@@ -6,10 +6,7 @@
     font-weight: bold;
     font-style: normal;
   }
-  * { 
-    padding: 0;
-    margin: 0;
-  }
+
   .heromainheading {
     font-family: "MyFont", sans-serif;
   }
