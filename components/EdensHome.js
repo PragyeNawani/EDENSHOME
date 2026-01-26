@@ -10,10 +10,10 @@ export default function EdensHome() {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const images = [
-    'https://hostyapp.com/wp-content/uploads/2020/06/Airbnb-Property-to-Buy-1200x423.jpg',
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=423&fit=crop',
-    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=423&fit=crop',
-    'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&h=423&fit=crop',
+    '1.jpeg',
+    '2.jpeg',
+    '3.jpeg',
+    '4.jpeg',
   ];
 
   useEffect(() => {
@@ -37,8 +37,8 @@ export default function EdensHome() {
       setTimeout(() => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
         setIsTransitioning(false);
-      }, 700);
-    }, 4000);
+      }, 1500);
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
@@ -60,9 +60,9 @@ export default function EdensHome() {
             <div className="space-y-6 mt-9 sm:mt-0 lg:space-y-8 w-full md:hidden lg:block xl:w-[35%] order-1 xl:order-2 h-[500px] sm:h-screen rounded-xl hero-container2 overflow-hidden relative">
               {/* Current Image */}
               <div
-                className="absolute inset-0 transition-transform duration-700 ease-in-out h-full w-full blur-[5px]"
+                className="absolute inset-0 transition-transform duration-700 ease-in-out h-full w-full blur-[5px] sm:blur-[0px]"
                 style={{
-                  backgroundImage: `url('${images[currentImageIndex]}')`,
+                  backgroundImage: `url('/${images[currentImageIndex]}')`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   transform: isTransitioning ? 'translateX(-100%)' : 'translateX(0)',
@@ -71,20 +71,22 @@ export default function EdensHome() {
 
               {/* Next Image sliding in from right */}
               <div
-                className="absolute inset-0 transition-transform duration-700 ease-in-out h-full w-full blur-[5px]"
+                className="absolute inset-0 transition-transform duration-700 ease-in-out h-full w-full blur-[5px] sm:blur-[0px]"
                 style={{
-                  backgroundImage: `url('${images[nextImageIndex]}')`,
+                  backgroundImage: `url('/${images[nextImageIndex]}')`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   transform: isTransitioning ? 'translateX(0)' : 'translateX(100%)',
                 }}
               ></div>
-              <div className='relative top-0 left-0 z-4 h-full flex flex-col pt-10 items-center'>
-                <span className='text-3xl'>EDENS HOME</span>
-                <span>Launching soon</span>
+              <div className='absolute sm:hidden w-full h-full bg-white opacity-[10%]'></div>
+              <div className='relative top-0 left-0 z-4 h-full flex flex-col justify-center items-center text-[#241705] sm:hidden '>
+                <span className='text-6xl [text-shadow:0_5px_20px_#241705] heromainheading mb-10'>EDENS HOME</span>
+                <span className="text-4xl italic font-['Times_New_Roman',Times,serif]">Launching soon</span>
+                <span className="text-4xl italic font-['Times_New_Roman',Times,serif]">Delhi NCR</span>
               </div>
               {/* Glass morphism overlay - responsive blur */}
-              <div className='h-full w-full backdrop-blur-[1px] sm:backdrop-blur-[2px] rounded-xl absolute' style={{
+              <div className='h-full w-full backdrop-blur-[1px] sm:backdrop-blur-[0px] rounded-xl absolute' style={{
                 background: 'rgba(255, 255, 255, 0.05)'
               }}></div>
             </div>

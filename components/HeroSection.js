@@ -8,16 +8,10 @@ export default function HeroSection() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   
   const images = [
-    'https://hostyapp.com/wp-content/uploads/2020/06/Airbnb-Property-to-Buy-1200x423.jpg',
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=423&fit=crop',
-    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=423&fit=crop',
-    'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&h=423&fit=crop',
-  ];
-  const images2 = [
-    'https://hostyapp.com/wp-content/uploads/2020/06/Airbnb-Property-to-Buy-1200x423.jpg',
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&h=423&fit=crop',
-    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&h=423&fit=crop',
-    'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&h=423&fit=crop',
+    '5.jpeg',
+    '6.jpeg',
+    '7.jpeg',
+    '8.jpeg',
   ];
 
   useEffect(() => {
@@ -28,8 +22,8 @@ export default function HeroSection() {
       setTimeout(() => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
         setIsTransitioning(false);
-      }, 700);
-    }, 4000);
+      }, 900);
+    }, 2500);
 
     return () => clearInterval(interval);
   }, []);
@@ -40,7 +34,7 @@ export default function HeroSection() {
       <div 
         className="absolute inset-0 transition-transform duration-700 ease-in-out"
         style={{
-          backgroundImage: `url('${images[currentImageIndex]}')`,
+          backgroundImage: `url('/${images[currentImageIndex]}')`,
           backgroundSize: 'cover',
           backgroundPosition: 'bottom',
           transform: isTransitioning ? 'translateX(-100%)' : 'translateX(0)',
@@ -51,14 +45,14 @@ export default function HeroSection() {
       <div 
         className="absolute inset-0 transition-transform duration-700 ease-in-out"
         style={{
-          backgroundImage: `url('${images[nextImageIndex]}')`,
+          backgroundImage: `url('/${images[nextImageIndex]}')`,
           backgroundSize: 'cover',
           backgroundPosition: 'bottom',
           transform: isTransitioning ? 'translateX(0)' : 'translateX(100%)',
         }}
       ></div>
 
-      <div className="h-full w-full backdrop-blur-[2px] glassmorph rounded-xl absolute"></div>
+      <div className="h-full w-full glassmorph rounded-xl absolute"></div>
       {/* Text On Div - Sized to fit exactly within overlay-left (33% width, 60% height) */}
       <h1 
         className="absolute z-1 left-0 heromainheading [text-shadow:0_5px_20px_#FCE8CA]

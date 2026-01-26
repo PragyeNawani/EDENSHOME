@@ -9,7 +9,7 @@ export default function ContactPage() {
             <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
-                    backgroundImage: 'url("https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=1600&q=80")',
+                    backgroundImage: `url('/contactus.jpeg')`,
                 }}
             >
                 {/* Dark overlay */}
@@ -20,7 +20,7 @@ export default function ContactPage() {
             <div className="relative z-1 w-full max-w-4xl py-10">
                 
                 {/* Title */}
-                <h1 className="text-amber-100 text-5xl md:text-6xl font-serif text-center mb-12 tracking-wider">
+                <h1 className="text-amber-100 text-3xl md:text-6xl font-serif text-center mb-12 tracking-wider">
                     CAN'T WAIT TILL WEBSITE TO GO LIVE?
                 </h1>
 

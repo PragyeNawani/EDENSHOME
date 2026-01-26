@@ -1,7 +1,25 @@
-import React from 'react';
+"use client"
+import React, { useState, useEffect } from 'react';
 import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function AboutPage() {
+  const images = [
+    "/9.jpeg",
+    "/10.jpeg",
+    "/11.jpeg",
+    "/12.jpeg",
+  ];
+  
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 2000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#241705] relative">
       {/* Background blur effect - responsive positioning */}
@@ -9,12 +27,23 @@ export default function AboutPage() {
 
       {/* Hero Section */}
       <div className="relative h-auto min-h-[600px] sm:h-96 overflow-hidden">
-        {/* Image - full width on mobile, half width on desktop */}
-        <img
-          src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=1200&h=400&fit=crop"
-          alt="Luxury living room"
-          className="w-full sm:w-1/2 h-64 sm:h-full object-cover"
-        />
+        {/* Image carousel - full width on mobile, half width on desktop */}
+        <div className="relative w-full sm:w-1/2 h-64 sm:h-full overflow-hidden">
+          {images.map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt={`Luxury property ${index + 1}`}
+              className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
+                index === currentIndex
+                  ? 'translate-x-0 opacity-100 z-1'
+                  : index === (currentIndex - 1 + images.length) % images.length
+                  ? '-translate-x-full opacity-0 z-0'
+                  : 'translate-x-full opacity-0 z-0'
+              }`}
+            />
+          ))}
+        </div>
         
         {/* Content overlay - stacked on mobile, side by side on desktop */}
         <div className="relative sm:absolute sm:h-full flex flex-col items-center sm:items-end sm:left-1/2 sm:top-0 justify-center bg-[#FCE8CA] text-[#241705] w-full sm:w-1/2 py-12 sm:py-0">
