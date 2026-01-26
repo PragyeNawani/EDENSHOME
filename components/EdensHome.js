@@ -60,7 +60,7 @@ export default function EdensHome() {
             <div className="space-y-6 mt-9 sm:mt-0 lg:space-y-8 w-full md:hidden lg:block xl:w-[35%] order-1 xl:order-2 h-[500px] sm:h-screen rounded-xl hero-container2 overflow-hidden relative">
               {/* Current Image */}
               <div
-                className="absolute inset-0 transition-transform duration-700 ease-in-out h-full w-full blur-[5px] sm:blur-[0px]"
+                className="absolute inset-0 transition-transform duration-700 ease-in-out h-full w-full"
                 style={{
                   backgroundImage: `url('/${images[currentImageIndex]}')`,
                   backgroundSize: 'cover',

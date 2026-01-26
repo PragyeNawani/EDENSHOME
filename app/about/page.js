@@ -76,9 +76,11 @@ export default function AboutPage() {
 
       {/* Footer Section */}
       <div className="bg-gradient-to-r from-purple-900 via-purple-800 to-purple-900 py-8 sm:py-10 md:py-12 flex justify-center px-4">
+        <a href="/">
         <button className="bg-pink-200 hover:bg-pink-300 text-gray-700 font-semibold py-3 sm:py-4 px-8 sm:px-10 md:px-12 rounded-full text-base sm:text-lg transition-colors duration-300">
           BACK TO HOME
         </button>
+        </a>
       </div>
     </div>
   );
