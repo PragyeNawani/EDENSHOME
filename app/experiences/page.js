@@ -30,7 +30,7 @@ export default function ExperiencesPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
           {/* Photography Card */}
           <div className="flex flex-col items-center">
-            <div className="w-full aspect-square rounded-lg flex items-center justify-center mb-4 sm:mb-6 relative overflow-hidden">
+            <div className="w-full aspect-square rounded-lg flex items-center justify-center mb-4 sm:mb-6 relative overflow-hidden border-2">
               <img src="./photo.jpeg" className='h-full w-full object-cover' alt="Photography services" />
               <div className="absolute top-4 left-4">
                 <div className="w-3 h-3 text-gray-300">✦</div>
@@ -44,7 +44,7 @@ export default function ExperiencesPage() {
           {/* Cab Services Card */}
           <div className="flex flex-col items-center">
             <div className="w-full aspect-square bg-gradient-to-br from-blue-50 to-gray-50 rounded-lg flex items-center justify-center mb-4 sm:mb-6 relative overflow-hidden">
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full border-2 rounded-xl">
                 <img src="./car.jpeg" className='h-full w-full object-cover' alt="Cab services" />
               </div>
             </div>
@@ -56,7 +56,7 @@ export default function ExperiencesPage() {
           {/* Events Card */}
           <div className="flex flex-col items-center sm:col-span-2 md:col-span-1">
             <div className="w-full aspect-square bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg flex items-center justify-center mb-4 sm:mb-6 relative overflow-hidden">
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full border-2 rounded-xl">
                 <img src="./events.jpeg" className='h-full w-full object-cover' alt="Events" />
               </div>
             </div>
@@ -71,7 +71,7 @@ export default function ExperiencesPage() {
       <div className="relative bg-gradient-to-br from-rose-200 via-purple-200 to-blue-200 py-12 sm:py-16 md:py-20 lg:py-24">
         <div className="absolute inset-0 bg-white/40"></div>
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 md:mb-8 tracking-wide">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-4 sm:mb-6 md:mb-8 tracking-wide [text-shadow:0_2px_20px_#241705]">
             COMING SOON
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-800 font-light italic leading-relaxed mb-8 sm:mb-10 md:mb-12 px-2">
@@ -80,9 +80,11 @@ export default function ExperiencesPage() {
             to make you feel truly at home. Soon, you'll discover experiences that add ease,
             warmth, and a little extra joy to every stay.
           </p>
-          <button className="bg-rose-200/60 hover:bg-rose-300/60 text-gray-800 px-6 sm:px-8 md:px-10 py-2 sm:py-3 text-base sm:text-lg font-light tracking-wider transition-colors">
-            BACK TO HOME
-          </button>
+          <a href="/">
+            <button className="bg-rose-200/60 hover:bg-rose-300/60 text-gray-800 px-6 sm:px-8 md:px-10 py-2 sm:py-3 text-base sm:text-lg font-light tracking-wider transition-colors cursor-pointer">
+              BACK TO HOME
+            </button>
+          </a>
         </div>
       </div>
     </div>

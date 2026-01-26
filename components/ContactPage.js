@@ -1,8 +1,18 @@
+"use client"
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
 import { FaWhatsapp } from "react-icons/fa";
 
 export default function ContactPage() {
+    // Replace this with your actual email address
+    const hostEmail = "avirals@edenshome.in";
+    
+    const handleEmailClick = () => {
+        // Open Gmail compose in a new tab
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${hostEmail}`;
+        window.open(gmailUrl, '_blank');
+    };
+
     return (
         <div className="min-h-screen relative flex items-center justify-center p-4">
             {/* Background Image */}
@@ -38,12 +48,13 @@ export default function ContactPage() {
                         If you have a question about your next stay, feel free to reach us out.
                     </p>
 
-                    {/* WhatsApp Button */}
+                    {/* Email Button */}
                     <div className="flex justify-center mb-12">
-                        <button className="bg-amber-700 hover:bg-amber-600 cursor-pointer text-white px-8 py-3 flex items-center gap-3 transition-colors rounded-xl">
-                            {/* <FaWhatsapp size={48} color="#25D366" /> */}
-                            {/* <span className="font-medium">Message us on WhatsApp</span> */}
-                            <span className="font-medium">Email Us!</span>
+                        <button 
+                            onClick={handleEmailClick}
+                            className="bg-amber-700 hover:bg-amber-600 cursor-pointer text-white px-8 py-3 font-medium transition-colors rounded-xl"
+                        >
+                            Email Us!
                         </button>
                     </div>
 

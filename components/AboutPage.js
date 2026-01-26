@@ -9,14 +9,14 @@ export default function AboutPage() {
     "/11.jpeg",
     "/12.jpeg",
   ];
-  
+
   const [currentIndex, setCurrentIndex] = useState(0);
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 2000);
-    
+
     return () => clearInterval(interval);
   }, []);
 
@@ -34,17 +34,16 @@ export default function AboutPage() {
               key={index}
               src={image}
               alt={`Luxury property ${index + 1}`}
-              className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
-                index === currentIndex
+              className={`absolute top-0 left-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${index === currentIndex
                   ? 'translate-x-0 opacity-100 z-1'
                   : index === (currentIndex - 1 + images.length) % images.length
-                  ? '-translate-x-full opacity-0 z-0'
-                  : 'translate-x-full opacity-0 z-0'
-              }`}
+                    ? '-translate-x-full opacity-0 z-0'
+                    : 'translate-x-full opacity-0 z-0'
+                }`}
             />
           ))}
         </div>
-        
+
         {/* Content overlay - stacked on mobile, side by side on desktop */}
         <div className="relative sm:absolute sm:h-full flex flex-col items-center sm:items-end sm:left-1/2 sm:top-0 justify-center bg-[#FCE8CA] text-[#241705] w-full sm:w-1/2 py-12 sm:py-0">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif mb-6 sm:mb-8 tracking-wide w-full px-6 sm:px-10 [text-shadow:0_8px_20px_#241705] text-center">
@@ -73,28 +72,34 @@ export default function AboutPage() {
         {/* Features Grid - responsive layout */}
         <div className="flex justify-center flex-wrap gap-6 sm:gap-8 mb-12 sm:mb-16">
           {/* Facebook */}
-          <div className="bg-[#FCE8CA] h-[180px] w-[180px] sm:h-[200px] sm:w-[200px] p-6 sm:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow flex flex-col justify-center">
-            <div className="w-full h-12 sm:h-16 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto">
-              <FaFacebook size={40} className="sm:w-12 sm:h-12" color="#1877F2" />
+          <a href="https://www.facebook.com/profile.php?id=61586395366153" target='__blank'>
+            <div className="bg-[#FCE8CA] h-[180px] w-[180px] sm:h-[200px] sm:w-[200px] p-6 sm:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow flex flex-col justify-center">
+              <div className="w-full h-12 sm:h-16 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto">
+                <FaFacebook size={40} className="sm:w-12 sm:h-12" color="#1877F2" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-semibold text-stone-800 mb-2 sm:mb-3 text-center">Facebook</h3>
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold text-stone-800 mb-2 sm:mb-3 text-center">Facebook</h3>
-          </div>
-          
+          </a>
+
           {/* Instagram */}
-          <div className="bg-[#FCE8CA] h-[180px] w-[180px] sm:h-[200px] sm:w-[200px] p-6 sm:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow flex flex-col justify-center">
-            <div className="w-full h-12 sm:h-16 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto">
-              <FaInstagram size={40} className="sm:w-12 sm:h-12" color="#E4405F" />
+          <a href="https://www.instagram.com/edens.home/" target='__blank'>
+            <div className="bg-[#FCE8CA] h-[180px] w-[180px] sm:h-[200px] sm:w-[200px] p-6 sm:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow flex flex-col justify-center">
+              <div className="w-full h-12 sm:h-16 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto">
+                <FaInstagram size={40} className="sm:w-12 sm:h-12" color="#E4405F" />
+              </div>
+              <h3 className="text-lg sm:text-xl font-semibold text-stone-800 mb-2 sm:mb-3 text-center">Instagram</h3>
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold text-stone-800 mb-2 sm:mb-3 text-center">Instagram</h3>
-          </div>
-          
+          </a>
+
           {/* LinkedIn */}
+          <a href="https://www.linkedin.com/company/edens-home/" target='__blank'>
           <div className="bg-[#FCE8CA] h-[180px] w-[180px] sm:h-[200px] sm:w-[200px] p-6 sm:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow flex flex-col justify-center">
             <div className="w-full h-12 sm:h-16 rounded-full flex items-center justify-center mb-3 sm:mb-4 mx-auto">
               <FaLinkedin size={40} className="sm:w-12 sm:h-12" color="#0A66C2" />
             </div>
             <h3 className="text-lg sm:text-xl font-semibold text-stone-800 mb-2 sm:mb-3 text-center">LinkedIn</h3>
           </div>
+          </a>
         </div>
       </div>
     </div>

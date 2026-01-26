@@ -80,8 +80,8 @@ export default function EdensHome() {
                 }}
               ></div>
               <div className='absolute sm:hidden w-full h-full bg-white opacity-[10%]'></div>
-              <div className='relative top-0 left-0 z-4 h-full flex flex-col justify-center items-center text-[#241705] sm:hidden '>
-                <span className='text-6xl [text-shadow:0_5px_20px_#241705] heromainheading mb-10'>EDENS HOME</span>
+              <div className='relative top-0 left-0 z-1 h-full flex flex-col justify-center items-center text-[#241705] sm:hidden '>
+                <span className='text-5xl [text-shadow:0_5px_20px_#241705] heromainheading mb-10 text-center'>EDENS HOME</span>
                 <span className="text-4xl italic font-['Times_New_Roman',Times,serif]">Launching soon</span>
                 <span className="text-4xl italic font-['Times_New_Roman',Times,serif]">Delhi NCR</span>
               </div>
