@@ -48,15 +48,20 @@ export default function EdensHome() {
       {/* Background Blur Elements - Responsive positioning and sizing */}
       <div className='w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] md:w-[250px] md:h-[250px] bg-[#FCE8CA] absolute left-0 top-0 sm:top-10 z-3 blur-[100px] sm:blur-[150px]'></div>
       <div className='w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] md:w-[250px] md:h-[250px] bg-[#FCE8CA] absolute bottom-0 right-0 z-3 blur-[100px] sm:blur-[150px]'></div>
-      
+
       {/* Main Content */}
       <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-16 md:py-20 lg:py-24 w-full h-full">
         <div className="max-w-7xl w-full mx-auto h-full">
           <div className="flex flex-col xl:flex-row gap-6 sm:gap-8 lg:gap-10 xl:gap-8 items-start">
             {/* Left Side - Text Content */}
             <HeroSection />
-          
+
             {/* Right Side - Property Images - Responsive visibility and sizing */}
+            <div className='block h-full w-full flex flex-col justify-center items-center text-[#FCE8CA] sm:hidden pt-16'>
+              <span className='text-5xl [text-shadow:0_5px_20px_#FCE8CA] heromainheading mb-10 text-center mx-auto'>EDENS HOME</span>
+              <span className="text-4xl italic font-['Times_New_Roman',Times,serif] [text-shadow:0_5px_20px_#FCE8CA]">Launching soon</span>
+              <span className="text-4xl italic font-['Times_New_Roman',Times,serif] [text-shadow:0_5px_20px_#FCE8CA]">Delhi NCR</span>
+            </div>
             <div className="space-y-6 mt-9 sm:mt-0 lg:space-y-8 w-full md:hidden lg:block xl:w-[35%] order-1 xl:order-2 h-[500px] sm:h-screen rounded-xl hero-container2 overflow-hidden relative">
               {/* Current Image */}
               <div
@@ -71,7 +76,7 @@ export default function EdensHome() {
 
               {/* Next Image sliding in from right */}
               <div
-                className="absolute inset-0 transition-transform duration-700 ease-in-out h-full w-full blur-[5px] sm:blur-[0px]"
+                className="absolute inset-0 transition-transform duration-700 ease-in-out h-full w-full"
                 style={{
                   backgroundImage: `url('/${images[nextImageIndex]}')`,
                   backgroundSize: 'cover',
@@ -80,10 +85,8 @@ export default function EdensHome() {
                 }}
               ></div>
               <div className='absolute sm:hidden w-full h-full bg-white opacity-[10%]'></div>
-              <div className='relative top-0 left-0 z-1 h-full flex flex-col justify-center items-center text-[#241705] sm:hidden '>
-                <span className='text-5xl [text-shadow:0_5px_20px_#241705] heromainheading mb-10 text-center'>EDENS HOME</span>
-                <span className="text-4xl italic font-['Times_New_Roman',Times,serif]">Launching soon</span>
-                <span className="text-4xl italic font-['Times_New_Roman',Times,serif]">Delhi NCR</span>
+              <div className='relative top-0 left-0 z-1 h-full flex flex-col justify-center items-center text-[#FCE8CA] sm:hidden '>
+                <span className='text-5xl [text-shadow:0_5px_20px_#FCE8CA] heromainheading  text-center bg-[#241705]/40 py-4'>EXCLUSIVE PROPERTIES</span>
               </div>
               {/* Glass morphism overlay - responsive blur */}
               <div className='h-full w-full backdrop-blur-[1px] sm:backdrop-blur-[0px] rounded-xl absolute' style={{
