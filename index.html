@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Easy. Local. Human.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #7b6cf6;
+      --purple-dark: #6358e0;
+      --text: #111;
+      --muted: #333;
+      --max: 1100px;
+      --pad: clamp(20px, 5vw, 60px);
+    }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: #fff;
+      color: var(--text);
+    }
+
+    /* ─── CENTERED WRAPPER ─── */
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--pad);
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 100;
+      border-bottom: 1px solid #eee;
+    }
+
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-logo {
+      width: 36px; height: 36px;
+      background: var(--purple);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .nav-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 1.5px solid #ccc;
+      border-radius: 40px;
+      padding: 8px 14px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .nav-search .dot { color: #aaa; font-size: 8px; }
+
+    .nav-search-btn {
+      width: 30px; height: 30px;
+      background: var(--purple);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-left: 4px;
+    }
+    .nav-search-btn svg { width: 14px; height: 14px; }
+
+    .nav-right {
+      display: flex; align-items: center; gap: 20px;
+      font-size: 14px;
+    }
+
+    .nav-avatar {
+      width: 34px; height: 34px;
+      background: #222; color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: bold; font-family: sans-serif;
+    }
+
+    /* ─── SECTION 1: HERO ─── */
+    .hero { padding: clamp(40px,6vw,70px) 0 clamp(30px,4vw,55px); }
+
+    .hero-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: clamp(24px,4vw,50px);
+    }
+
+    .hero-left { flex: 1 1 45%; min-width: 0; }
+
+    .hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(52px,8vw,96px);
+      font-weight: 900;
+      font-style: italic;
+      line-height: 1.0;
+      color: var(--text);
+      margin-bottom: 36px;
+    }
+
+    .hero-icons {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .hero-icons svg {
+      width: clamp(44px,6vw,62px);
+      height: clamp(44px,6vw,62px);
+    }
+
+    .icon-sep {
+      width: 8px; height: 8px;
+      background: #111; border-radius: 50%;
+      margin: 0 10px;
+    }
+
+    .icon-sep-tri {
+      width: 0; height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 12px solid #111;
+      margin: 0 10px;
+    }
+
+    .hero-right {
+      flex: 1 1 45%;
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 18px;
+      min-width: 0;
+    }
+
+    .hero-image-box {
+      width: 100%; max-width: 400px;
+      aspect-ratio: 4/3.3;
+      background: var(--purple);
+      border-radius: 28px;
+    }
+
+    .hero-desc {
+      width: 100%; max-width: 400px;
+      font-style: italic; font-size: 15px;
+      line-height: 1.7; color: #222;
+    }
+
+    /* ─── SECTION 2: PROMISE ─── */
+    .promise { padding: clamp(60px,8vw,100px) 0; text-align: center; }
+
+    .promise-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(44px,7vw,72px);
+      font-weight: 800; color: var(--text);
+      margin-bottom: 60px;
+    }
+
+    .promise-grid {
+      display: flex; justify-content: center;
+      gap: 20px; flex-wrap: wrap;
+    }
+
+    .promise-item {
+      flex: 1 1 200px; max-width: 280px;
+      padding: 0 10px; text-align: center;
+    }
+
+    .promise-item h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(26px,3vw,36px);
+      font-weight: 800; font-style: italic; color: var(--text);
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--purple);
+      display: inline-block; margin-bottom: 16px;
+    }
+
+    .promise-item p { font-size: 14px; line-height: 1.65; color: var(--muted); }
+
+    /* ─── SECTION 3: REAL SUPPORT ─── */
+    .real-support { padding: clamp(40px,6vw,70px) 0; }
+
+    .real-support-inner {
+      display: flex; align-items: center;
+      gap: clamp(30px,5vw,70px);
+    }
+
+    .real-support-left { flex: 1 1 45%; min-width: 0; }
+
+    .real-support-left h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(36px,5vw,52px);
+      font-weight: 900; font-style: italic;
+      line-height: 1.1; margin-bottom: 28px;
+    }
+
+    .real-support-left p {
+      font-size: 15px; line-height: 1.8;
+      color: #222; margin-bottom: 16px;
+    }
+
+    .real-support-right {
+      flex: 1 1 45%;
+      display: flex; justify-content: flex-end;
+    }
+
+    .support-image-box {
+      width: 100%; max-width: 430px;
+      aspect-ratio: 1.05/1;
+      background: var(--purple); border-radius: 28px;
+    }
+
+    /* ─── SECTION 4: HOW IT WORKS ─── */
+    .how-it-works { padding: clamp(60px,8vw,100px) 0; text-align: center; }
+
+    .how-it-works h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(48px,7vw,80px);
+      font-weight: 900; color: var(--text); margin-bottom: 56px;
+    }
+
+    .how-step { margin-bottom: 44px; }
+    .how-step:last-child { margin-bottom: 0; }
+
+    .how-step h3 {
+      font-family: Georgia, serif;
+      font-size: 20px; font-weight: bold;
+      color: var(--text); margin-bottom: 10px;
+    }
+
+    .how-step p {
+      font-size: 15px; line-height: 1.75; color: #222;
+      max-width: 800px; margin: 0 auto;
+    }
+
+    /* ─── SECTION 5: FOUNDER ─── */
+    .founder { padding: clamp(50px,6vw,80px) 0; }
+
+    .founder-top {
+      display: flex; align-items: flex-start;
+      gap: clamp(24px,4vw,50px); margin-bottom: 36px;
+    }
+
+    .founder-photo-wrap { position: relative; flex-shrink: 0; }
+
+    .founder-photo-placeholder {
+      width: clamp(200px,26vw,340px);
+      aspect-ratio: 340/380;
+      border-radius: 20px;
+      background: linear-gradient(145deg,#d4a574 0%,#8b6340 45%,#2c1810 100%);
+      display: block;
+    }
+
+    .founder-name-tag {
+      position: absolute; bottom: -14px; left: 12px;
+      background: #fff; border-radius: 10px;
+      padding: 8px 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.13);
+    }
+
+    .founder-name-tag .name { font-size: 13px; font-weight: 600; color: #111; }
+    .founder-name-tag .role { font-size: 12px; color: #777; }
+
+    .founder-quote {
+      flex: 1;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(26px,4vw,48px);
+      font-weight: 900; font-style: italic;
+      line-height: 1.15; color: var(--text);
+      padding-top: 8px;
+    }
+
+    .founder-body {
+      font-size: 14px; line-height: 1.9; color: #222;
+      text-align: center; max-width: 840px; margin: 0 auto;
+    }
+
+    /* ─── SECTION 6: CONTACT ─── */
+    .contact-section { padding: clamp(50px,6vw,80px) 0; }
+
+    .contact-inner {
+      display: flex; align-items: center;
+      gap: clamp(30px,5vw,70px);
+    }
+
+    .contact-left { flex: 1 1 40%; min-width: 0; }
+
+    .contact-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(36px,5vw,52px);
+      font-weight: 900; font-style: italic;
+      color: var(--text); margin-bottom: 20px;
+    }
+
+    .contact-desc {
+      font-size: 15px; line-height: 1.75; color: #222;
+      margin-bottom: 20px; max-width: 380px;
+    }
+
+    .contact-email, .contact-phone {
+      font-size: 15px; color: var(--text); margin-bottom: 8px;
+    }
+
+    .contact-right {
+      flex: 1 1 55%;
+      display: flex; justify-content: flex-end;
+    }
+
+    .contact-card {
+      background: var(--purple);
+      border-radius: 24px;
+      padding: clamp(24px,4vw,40px) clamp(20px,3vw,34px) clamp(28px,4vw,44px);
+      width: 100%; max-width: 460px;
+    }
+
+    .contact-card-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(28px,3.5vw,40px);
+      font-weight: 800; font-style: italic;
+      color: #fff; text-align: center; margin-bottom: 26px;
+    }
+
+    .form-group { position: relative; margin-bottom: 14px; }
+
+    .form-input {
+      width: 100%;
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.6);
+      border-radius: 40px;
+      padding: 13px 46px 13px 18px;
+      font-size: 14px; color: #fff;
+      font-family: Georgia, serif; outline: none;
+    }
+
+    .form-input::placeholder { color: rgba(255,255,255,0.85); }
+
+    .form-textarea {
+      border-radius: 18px;
+      height: 110px; resize: none; padding-top: 14px;
+    }
+
+    .input-icon {
+      position: absolute; right: 14px; top: 50%;
+      transform: translateY(-50%);
+      width: 20px; height: 20px; pointer-events: none;
+    }
+
+    .input-icon svg { width: 20px; height: 20px; }
+    .input-icon-textarea { top: 17px; transform: none; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .hero-inner,
+      .real-support-inner,
+      .contact-inner { flex-direction: column; }
+
+      .hero-right { align-items: flex-start; width: 100%; }
+      .hero-image-box, .hero-desc { max-width: 100%; width: 100%; }
+
+      .real-support-right { justify-content: flex-start; width: 100%; }
+      .support-image-box { max-width: 100%; width: 100%; }
+
+      .founder-top { flex-direction: column; }
+      .founder-photo-placeholder { width: 100%; max-width: 280px; }
+
+      .contact-right { justify-content: flex-start; width: 100%; }
+      .contact-card { max-width: 100%; }
+    }
+
+    @media (max-width: 520px) {
+      .nav-search { display: none; }
+      .promise-grid { flex-direction: column; align-items: center; }
+      .promise-item { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo"></div>
+      <div class="nav-search">
+        <span>Anywhere</span>
+        <span class="dot">•</span>
+        <span>Any time</span>
+        <span class="dot">•</span>
+        <span>Anyone</span>
+        <div class="nav-search-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </div>
+      </div>
+      <div class="nav-right">
+        <span>About</span>
+        <span>Contact</span>
+        <div class="nav-avatar">P</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SECTION 1: HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="hero-left">
+          <h1 class="hero-title">Easy.<br>Local.<br>Human.</h1>
+          <div class="hero-icons">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="10" width="48" height="52" rx="2" fill="#7b6cf6"/>
+              <rect x="16" y="20" width="8" height="8" fill="white"/>
+              <rect x="28" y="20" width="8" height="8" fill="white"/>
+              <rect x="40" y="20" width="8" height="8" fill="white"/>
+              <rect x="16" y="34" width="8" height="8" fill="white"/>
+              <rect x="28" y="34" width="8" height="8" fill="white"/>
+              <rect x="40" y="34" width="8" height="8" fill="white"/>
+              <rect x="24" y="47" width="16" height="15" fill="white"/>
+            </svg>
+            <div class="icon-sep"></div>
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="32,8 8,28 56,28" fill="#7b6cf6"/>
+              <rect x="20" y="28" width="24" height="24" fill="#7b6cf6"/>
+              <rect x="28" y="36" width="8" height="16" fill="white"/>
+              <path d="M4 40 Q14 32 24 40 Q34 48 44 40 Q54 32 62 40" stroke="#7b6cf6" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+              <path d="M4 48 Q14 40 24 48 Q34 56 44 48 Q54 40 62 48" stroke="#7b6cf6" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            </svg>
+            <div class="icon-sep-tri"></div>
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="30" width="52" height="20" rx="4" fill="#7b6cf6"/>
+              <path d="M14 30 L20 16 L44 16 L50 30Z" fill="#7b6cf6"/>
+              <rect x="22" y="18" width="20" height="10" rx="2" fill="white"/>
+              <circle cx="17" cy="52" r="7" fill="white" stroke="#7b6cf6" stroke-width="2"/>
+              <circle cx="17" cy="52" r="3.5" fill="#7b6cf6"/>
+              <circle cx="47" cy="52" r="7" fill="white" stroke="#7b6cf6" stroke-width="2"/>
+              <circle cx="47" cy="52" r="3.5" fill="#7b6cf6"/>
+            </svg>
+            <div class="icon-sep"></div>
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="12" width="52" height="46" rx="5" fill="#7b6cf6"/>
+              <rect x="6" y="12" width="52" height="16" rx="5" fill="#6358e0"/>
+              <rect x="18" y="6" width="6" height="12" rx="3" fill="#7b6cf6"/>
+              <rect x="40" y="6" width="6" height="12" rx="3" fill="#7b6cf6"/>
+              <path d="M32 48 C32 48 18 38 18 30 C18 26 21 23 25 23 C28 23 30 25 32 27 C34 25 36 23 39 23 C43 23 46 26 46 30 C46 38 32 48 32 48Z" fill="white"/>
+            </svg>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-image-box"></div>
+          <p class="hero-desc">
+            We are a local team dedicated to making short-term rentals work better for everyone.
+            Whether you are in town for work, a quick visit with family, or just need a change of
+            scenery, we are here to make sure your stay goes smoothly from start to finish.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: OUR PROMISE -->
+  <section class="promise">
+    <div class="wrap">
+      <h2 class="promise-title">Our promise</h2>
+      <div class="promise-grid">
+        <div class="promise-item">
+          <h3>Reliable</h3>
+          <p>We show up, we deliver, and<br>you can count on us.</p>
+        </div>
+        <div class="promise-item">
+          <h3>Hands-On</h3>
+          <p>We personally make sure<br>every stay goes right.</p>
+        </div>
+        <div class="promise-item">
+          <h3>Human</h3>
+          <p>Real people, real support,<br>real conversations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: BUILT ON REAL SUPPORT -->
+  <section class="real-support">
+    <div class="wrap">
+      <div class="real-support-inner">
+        <div class="real-support-left">
+          <h2>Built on Real<br>Support</h2>
+          <p>The biggest difference between us and the big booking sites?</p>
+          <p>When you need help, you get a real person. From the moment you book until the moment you leave, we are available. Need travel arranged? Have a question at 8 PM? We respond quickly and take care of it personally.</p>
+          <p>No automated menus. No waiting on hold. Just reliable, friendly support.</p>
+        </div>
+        <div class="real-support-right">
+          <div class="support-image-box"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: HOW IT WORKS -->
+  <section class="how-it-works">
+    <div class="wrap">
+      <h2>How It Works</h2>
+      <div class="how-step">
+        <h3>Find Your Space</h3>
+        <p>Browse our collection of carefully selected homes. Each one is personally checked to ensure it is clean, comfortable, and exactly as shown.</p>
+      </div>
+      <div class="how-step">
+        <h3>Book with Ease</h3>
+        <p>Booking is straightforward with clear pricing and no hidden fees. Pick your dates, confirm your stay, and you are all set.</p>
+      </div>
+      <div class="how-step">
+        <h3>Settle In and Relax</h3>
+        <p>Arrive to a space that is ready for you. If anything comes up, we are just a message away—quick support from a real person who cares.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: FOUNDER -->
+  <section class="founder">
+    <div class="wrap">
+      <div class="founder-top">
+        <div class="founder-photo-wrap">
+          <div class="founder-photo-placeholder"></div>
+          <div class="founder-name-tag">
+            <div class="name">Aviral Sharma</div>
+            <div class="role">Founder</div>
+          </div>
+        </div>
+        <div class="founder-quote">
+          "Entrepreneurship is all about hustling and error, the differentiator in a century is a man of its pride and words"
+        </div>
+      </div>
+      <p class="founder-body">
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
+        aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION 6: CONTACT US -->
+  <section class="contact-section">
+    <div class="wrap">
+      <div class="contact-inner">
+        <div class="contact-left">
+          <h2 class="contact-title">Contact Us</h2>
+          <p class="contact-desc">Have a question about a property? Need help with a booking? Reach out anytime—we are here to help.</p>
+          <p class="contact-email">hello@[companyname].com</p>
+          <p class="contact-phone">+91 63820 75937</p>
+        </div>
+        <div class="contact-right">
+          <div class="contact-card">
+            <h3 class="contact-card-title">Get in Touch</h3>
+            <div class="form-group">
+              <input type="text" placeholder="Name" class="form-input"/>
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+                  <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </span>
+            </div>
+            <div class="form-group">
+              <input type="email" placeholder="Email" class="form-input"/>
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+                  <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </span>
+            </div>
+            <div class="form-group">
+              <input type="tel" placeholder="Phone Number" class="form-input"/>
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+                  <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </span>
+            </div>
+            <div class="form-group">
+              <textarea placeholder="How can we help?" class="form-input form-textarea"></textarea>
+              <span class="input-icon input-icon-textarea">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+                  <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
