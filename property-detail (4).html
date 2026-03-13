@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Title Of Property — Edens Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #8B8AFF; --primary-hover: #6E6DCC; --primary-tint: #EEEEFF;
+  --bg: #FFFFFF; --surface: #F7F7FC;
+  --text: #1A1A2E; --text-secondary: #6B7280; --border: #E5E7EB;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(139,138,255,0.10), 0 2px 6px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 32px rgba(139,138,255,0.14), 0 4px 12px rgba(0,0,0,0.08);
+}
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); font-size:15px; line-height:1.6; }
+
+/* ── NAVBAR ── */
+nav {
+  position:sticky; top:0; z-index:200;
+  background:#fff; border-bottom:1px solid var(--border);
+  height:64px; display:flex; align-items:center; padding:0 32px;
+}
+.nav-logo { flex-shrink:0; display:flex; align-items:center; gap:10px; text-decoration:none; }
+.nav-logo-circle { width:38px; height:38px; background:var(--primary); border-radius:50%; }
+.nav-center { flex:1; display:flex; justify-content:center; }
+
+.nav-search-pill {
+  display:flex; align-items:center;
+  border:1px solid var(--border); border-radius:999px;
+  height:44px; padding:0 4px 0 22px;
+  cursor:pointer; background:#fff;
+  box-shadow:var(--shadow-sm);
+  transition:box-shadow 0.2s, width 0.32s cubic-bezier(0.4,0,0.2,1);
+  width:320px; overflow:visible;
+}
+.nav-search-pill:hover { box-shadow:var(--shadow-md); }
+.nav-search-pill.expanded { width:470px; box-shadow:var(--shadow-md); border-color:#c4c3ff; }
+
+.pill-fields { display:flex; align-items:center; flex:1; width: 200px; }
+.pill-field { font-size:14px; font-weight:500; color:var(--text); white-space:nowrap; }
+.pill-dot { color:#9CA3AF; font-size:5px; padding:0 14px; line-height:0; }
+.pill-btn {
+  width:34px; height:34px; min-width:34px;
+  background:var(--primary); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  margin-left:10px;
+  transition:background 0.2s, transform 0.15s;
+  /* sits flush against the pill's right inner edge */
+  flex-shrink: 0;
+}
+.pill-btn:hover { background:var(--primary-hover); transform:scale(1.08); }
+.pill-btn svg { width:14px; height:14px; stroke:white; fill:none; stroke-width:2.5; }
+
+.nav-right { flex-shrink:0; display:flex; align-items:center; gap:16px; }
+.nav-right a { font-size:14px; font-weight:500; color:var(--text); text-decoration:none; }
+.nav-right a:hover { color:var(--primary); }
+.nav-profile {
+  width:34px; height:34px; background:#1A1A2E; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:white; font-size:13px; font-weight:700; cursor:pointer;
+  letter-spacing:0.02em;
+}
+
+/* ── SEARCH OVERLAY + DROPDOWN ── */
+.search-overlay {
+  position:fixed; inset:0; z-index:190;
+  background:rgba(0,0,0,0.06);
+  opacity:0; pointer-events:none;
+  transition:opacity 0.25s;
+}
+.search-overlay.open { opacity:1; pointer-events:all; }
+
+.search-dropdown {
+  position:fixed; top:64px; left:0; right:0; z-index:195;
+  background:white; border-bottom:1px solid var(--border);
+  padding:20px 32px; box-shadow:var(--shadow-md);
+  transform:translateY(-10px); opacity:0; pointer-events:none;
+  transition:opacity 0.25s ease, transform 0.25s ease;
+}
+.search-dropdown.open { opacity:1; transform:translateY(0); pointer-events:all; }
+
+.dropdown-inner {
+  max-width:900px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1fr 1fr auto;
+  gap:10px; align-items:center;
+}
+.dd-field {
+  display:flex; flex-direction:column; gap:3px;
+  padding:11px 16px; border:1.5px solid var(--border); border-radius:14px;
+  cursor:pointer; transition:border-color 0.2s, box-shadow 0.2s;
+}
+.dd-field:hover,.dd-field.active { border-color:var(--primary); box-shadow:0 0 0 3px rgba(139,138,255,0.1); }
+.dd-field label { font-size:11px; font-weight:700; color:var(--text); text-transform:uppercase; letter-spacing:0.06em; pointer-events:none; }
+.dd-field span { font-size:13px; color:var(--text-secondary); pointer-events:none; }
+.dd-search-btn {
+  height:46px; padding:0 22px;
+  background:var(--primary); color:white; border:none; border-radius:14px;
+  font-size:14px; font-weight:700; cursor:pointer;
+  display:flex; align-items:center; gap:8px;
+  transition:background 0.2s; white-space:nowrap;
+}
+.dd-search-btn:hover { background:var(--primary-hover); }
+.dd-search-btn svg { width:15px; height:15px; stroke:white; fill:none; stroke-width:2.5; }
+
+/* ── PAGE ── */
+.page { max-width:1100px; margin:0 auto; padding:32px 70px 80px 24px; overflow-x:visible; }
+.title-row { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; }
+.property-title { font-family:'Playfair Display',serif; font-size:28px; font-weight:700; color:var(--text); }
+.location-badge { display:flex; align-items:center; gap:5px; font-size:14px; font-weight:500; color:var(--text-secondary); cursor:pointer; flex-shrink:0; margin-top:6px; }
+.location-badge svg { width:15px; height:15px; flex-shrink:0; }
+
+/* ── GALLERY ── */
+.gallery-section {
+  position: relative;
+  margin-bottom: 24px;
+  padding-right: 0;
+}
+.gallery {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 220px 200px;
+  gap: 6px;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.g { overflow:hidden; }
+.g.big { grid-column:1; grid-row:1/3; background:#8B8AFF; }
+.g.s1  { grid-column:2; grid-row:1;   background:#a4a3ff; }
+.g.s2  { grid-column:3; grid-row:1;   background:#bcbbff; }
+.g.s3  { grid-column:2; grid-row:2;   background:#9c9bff; }
+.g.s4  { grid-column:3; grid-row:2;   background:#b0afff; }
+.show-photos {
+  position: absolute; bottom: 14px; right: 14px;
+  background: white; border: 1px solid var(--border); border-radius: 10px;
+  padding: 8px 14px; font-size: 13px; font-weight: 600; color: var(--text);
+  cursor: pointer; display: flex; align-items: center; gap: 7px;
+  box-shadow: var(--shadow-sm); transition: box-shadow 0.2s;
+}
+.show-photos:hover { box-shadow: var(--shadow-md); }
+.show-photos svg { width:14px; height:14px; stroke:var(--text); fill:none; stroke-width:2; }
+
+/* ── SIDE ICONS — absolute, right of gallery ── */
+.side-icons {
+  position: absolute;
+  top: 10px;
+  right: -54px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.s-icon {
+  width: 42px; height: 42px;
+  background: white; border: 1px solid var(--border); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+}
+.s-icon:hover { box-shadow: var(--shadow-md); border-color: var(--primary); transform: scale(1.1); }
+.s-icon svg { width: 18px; height: 18px; stroke: #555; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ── META / TAGS ── */
+.meta-row { display:flex; align-items:center; font-size:14px; color:var(--text-secondary); margin-bottom:14px; flex-wrap:wrap; gap:0; }
+.meta-row span { display:flex; align-items:center; gap:6px; }
+.meta-dot { color:#D1D5DB; font-size:5px; margin:0 10px; }
+.tag-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; }
+.tag { padding:5px 14px; border-radius:999px; font-size:13px; font-weight:500; background:var(--primary-tint); color:var(--primary); border:1px solid #d4d3ff; }
+hr { border:none; border-top:1px solid var(--border); margin:28px 0; }
+
+/* ── CONTENT GRID ── */
+.content-grid { display:grid; grid-template-columns:1fr 300px; gap:48px; align-items:start; }
+.content-left { min-width:0; }
+.section-heading { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--text); margin-bottom:16px; }
+
+.kf ul { list-style:none; display:flex; flex-direction:column; gap:9px; }
+.kf li { display:flex; align-items:flex-start; gap:10px; font-size:14px; color:var(--text-secondary); line-height:1.5; }
+.kf li::before { content:''; width:6px; height:6px; background:var(--primary); border-radius:50%; flex-shrink:0; margin-top:6px; }
+
+.space-text { font-size:15px; color:var(--text-secondary); line-height:1.75; margin-bottom:16px; overflow:hidden; display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; }
+.space-text.expanded { -webkit-line-clamp:unset; display:block; }
+.read-more { display:inline-flex; align-items:center; gap:6px; padding:8px 20px; background:var(--primary-tint); color:var(--primary); border:1px solid #d4d3ff; border-radius:999px; font-size:13px; font-weight:600; cursor:pointer; transition:background 0.2s; }
+.read-more:hover { background:var(--primary); color:white; }
+
+.am-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; }
+.am-item { display:flex; align-items:center; gap:14px; padding:14px 0; border-bottom:1px solid var(--border); font-size:14px; color:var(--text); font-weight:500; }
+.am-icon { width:30px; height:30px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.am-icon svg { width:22px; height:22px; stroke:var(--text); fill:none; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+.show-all { display:inline-flex; align-items:center; gap:6px; margin-top:20px; padding:10px 22px; background:var(--primary); color:white; border:none; border-radius:999px; font-size:13px; font-weight:600; cursor:pointer; transition:background 0.2s; }
+.show-all:hover { background:var(--primary-hover); }
+
+.map-box { width:100%; height:260px; border-radius:16px; overflow:hidden; border:1px solid var(--border); margin-bottom:20px; }
+.map-box iframe { width:100%; height:100%; border:none; display:block; }
+.nearby-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.nb-card { cursor:pointer; }
+.nb-img { width:100%; aspect-ratio:4/3; border-radius:12px; overflow:hidden; margin-bottom:10px; }
+.nb-name { font-size:14px; font-weight:600; color:var(--text); margin-bottom:3px; }
+.nb-desc { font-size:12px; color:var(--text-secondary); line-height:1.4; }
+
+/* ── GUEST COUNT ── */
+.gc-row { display:flex; align-items:baseline; gap:10px; margin-bottom:28px; flex-wrap:wrap; }
+.gc-label,.gc-after { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--text); }
+.gc-num { font-family:'Playfair Display',serif; font-size:54px; font-weight:700; color:var(--primary); line-height:1; display:inline-block; min-width:70px; }
+
+.reviews { display:flex; flex-direction:column; gap:28px; }
+.review { font-size:14px; color:var(--text-secondary); line-height:1.7; font-style:italic; }
+.review.right { text-align:right; padding-left:60px; }
+.review.left { padding-right:40px; }
+.qm { font-family:'Playfair Display',serif; font-size:42px; line-height:0; vertical-align:-16px; color:var(--primary); opacity:0.55; font-style:normal; display:inline; }
+.qm.o { margin-right:3px; } .qm.c { margin-left:3px; }
+
+.ttk-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+.ttk-item { display:flex; flex-direction:column; gap:8px; }
+.ttk-icon { width:42px; height:42px; display:flex; align-items:center; justify-content:center; }
+.ttk-icon svg { width:26px; height:26px; }
+.ttk-title { font-size:14px; font-weight:600; color:var(--text); }
+.ttk-text { font-size:13px; color:var(--text-secondary); line-height:1.6; }
+.ttk-link { font-size:13px; font-weight:600; color:var(--primary); text-decoration:underline; cursor:pointer; display:inline-block; margin-top:4px; }
+
+/* ── BOOKING CARD — updated to match image ── */
+.bc-wrap { position:sticky; top:84px; }
+
+/* Cab banner */
+.cab-banner {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  background:#fff;
+  border:1.5px solid var(--border);
+  border-radius:14px;
+  padding:13px 16px;
+  font-size:14px; font-weight:600; color:var(--text);
+  margin-bottom:14px;
+  box-shadow: var(--shadow-sm);
+}
+.cab-banner svg { width:22px; height:22px; stroke:var(--primary); fill:none; stroke-width:1.8; }
+
+/* Main booking card */
+.bc {
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:24px;
+  box-shadow:var(--shadow-lg);
+  background:white;
+}
+
+/* Title */
+.bc-title {
+  font-size:20px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:18px;
+  letter-spacing:-0.01em;
+}
+
+/* Combined fields container — single bordered box with internal divider */
+.bc-fields-group {
+  border: 1.5px solid #c4c3ff;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.bc-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 18px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: white;
+  transition: background 0.15s;
+  user-select: none;
+}
+.bc-field:hover { background: #fafaff; }
+
+/* Divider between date and guest fields */
+.bc-field-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0;
+}
+
+.bc-field svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--text-secondary);
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+/* Pill-shaped check availability button */
+.check-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 999px;        /* full pill */
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 14px rgba(139,138,255,0.35);
+}
+.check-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(139,138,255,0.45);
+}
+.check-btn:active { transform: translateY(0); }
+
+.contact-note {
+  text-align:center;
+  margin-top:14px;
+  font-size:13px;
+  color:var(--text-secondary);
+}
+.contact-note a { color:var(--primary); font-weight:600; text-decoration:none; }
+.contact-note a:hover { text-decoration:underline; }
+
+/* ── FOOTER ── */
+footer { background:var(--primary); color:white; padding:60px 0 32px; margin-top:80px; }
+.fi { max-width:1100px; margin:0 auto; padding:0 24px; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:40px; }
+.fb { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:white; margin-bottom:12px; }
+.ft { font-size:13px; color:rgba(255,255,255,0.7); line-height:1.6; margin-bottom:20px; }
+.fs { display:flex; flex-direction:column; gap:10px; }
+.fs a { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:500; color:rgba(255,255,255,0.85); text-decoration:none; }
+.fs a svg { width:18px; height:18px; stroke:white; fill:none; stroke-width:1.8; }
+.fs a:hover { color:white; }
+.fct { font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.55); margin-bottom:12px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.2); }
+.fl { display:flex; flex-direction:column; gap:10px; }
+.fl a { font-size:14px; color:rgba(255,255,255,0.8); text-decoration:none; transition:color 0.15s; }
+.fl a:hover { color:white; }
+.fbot { max-width:1100px; margin:40px auto 0; padding:20px 24px 0; border-top:1px solid rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:space-between; font-size:12px; color:rgba(255,255,255,0.55); }
+
+@media (max-width:900px) { .content-grid { grid-template-columns:1fr; } .bc-wrap { position:static; } .ttk-grid { grid-template-columns:1fr 1fr; } .fi { grid-template-columns:1fr 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="search-overlay" id="overlay" onclick="closeSearch()"></div>
+
+<div class="search-dropdown" id="dropdown">
+  <div class="dropdown-inner">
+    <div class="dd-field active">
+      <label>Where</label>
+      <span>Search destinations</span>
+    </div>
+    <div class="dd-field">
+      <label>Check in</label>
+      <span>Add dates</span>
+    </div>
+    <div class="dd-field">
+      <label>Check out</label>
+      <span>Add dates</span>
+    </div>
+    <button class="dd-search-btn" onclick="closeSearch()">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      Search
+    </button>
+  </div>
+</div>
+
+<nav>
+  <a href="/" class="nav-logo"><div class="nav-logo-circle"></div></a>
+  <div class="nav-center">
+    <div class="nav-search-pill" id="pill" onclick="openSearch()">
+      <div class="pill-fields">
+        <span class="pill-field">Anywhere</span>
+        <span class="pill-dot">●</span>
+        <span class="pill-field">Any time</span>
+        <span class="pill-dot">●</span>
+        <span class="pill-field">Anyone</span>
+      </div>
+      <div class="pill-btn">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+    <div class="nav-profile">P</div>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="title-row">
+    <h1 class="property-title">Title Of Property</h1>
+    <div class="location-badge">
+      <svg viewBox="0 0 24 24" fill="var(--primary)" stroke="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      Location
+    </div>
+  </div>
+
+  <div class="gallery-section">
+    <div class="gallery">
+      <div class="g big"></div>
+      <div class="g s1"></div>
+      <div class="g s2"></div>
+      <div class="g s3"></div>
+      <div class="g s4"></div>
+      <button class="show-photos">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Show all photos
+      </button>
+    </div>
+
+    <div class="side-icons">
+      <button class="s-icon" title="Save">
+        <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      </button>
+      <button class="s-icon" title="Share">
+        <svg viewBox="0 0 24 24">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+      </button>
+      <button class="s-icon" title="Map">
+        <svg viewBox="0 0 24 24">
+          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+      </button>
+      <button class="s-icon" title="Report">
+        <svg viewBox="0 0 24 24">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17" stroke-width="3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="meta-row">
+    <span>2 Guests</span><span class="meta-dot">●</span>
+    <span>1 Bedroom</span><span class="meta-dot">●</span>
+    <span>1 Bed</span><span class="meta-dot">●</span>
+    <span>1 Bathroom</span>
+  </div>
+  <div class="tag-row">
+    <span class="tag">Pool</span>
+    <span class="tag">Free Parking</span>
+  </div>
+
+  <hr />
+
+  <div class="content-grid">
+    <div class="content-left">
+
+      <div class="kf" style="margin-bottom:28px">
+        <h2 class="section-heading">Key features</h2>
+        <ul>
+          <li>Infinity Swimming pool at rooftop</li>
+          <li>Centrally Air-conditioned apartment</li>
+          <li>Modern bathroom</li>
+          <li>Fresh apartment with all new furniture</li>
+          <li>Free high speed wifi connection</li>
+          <li>Perfect for long term or a short term stay</li>
+          <li>24*7 security available in the building</li>
+          <li>Park for free inside the premises (secured by guards and security cameras).</li>
+          <li>Super safe for solo travelling girls</li>
+        </ul>
+      </div>
+
+      <hr />
+
+      <div style="margin-bottom:28px">
+        <h2 class="section-heading">The space</h2>
+        <p class="space-text" id="spaceText">Welcome to this another luxurious property by Tulip Homes situated on 12 floor. It is a completely fresh apartment with all new furniture and linen. Garden patio with flower plants makes it unique in class. The place is perfect for relaxing and enjoying scenic view of city &amp; Aravali range. Apartment is loaded with smart tv (all applications works), a cozy double bed, big wardrobe with locker, 2 sofa chairs, stylish coffee table, fridge, microwave, electric kettle, toaster, wifi &amp; many more...</p>
+        <button class="read-more" id="rmBtn" onclick="toggleReadMore()">Read More</button>
+      </div>
+
+      <hr />
+
+      <div style="margin-bottom:28px">
+        <h2 class="section-heading">What the space offers</h2>
+        <div class="am-grid">
+          <div class="am-item"><div class="am-icon"><svg viewBox="0 0 24 24"><path d="M2 20h20M4 20V12a8 8 0 0 1 16 0v8"/></svg></div>Pool</div>
+          <div class="am-item"><div class="am-icon"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></div>Wi‑Fi</div>
+          <div class="am-item"><div class="am-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3c1.5 2.5 2.5 5 2.5 9s-1 6.5-2.5 9"/><path d="M3 12h18"/></svg></div>Air Conditioning</div>
+          <div class="am-item"><div class="am-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>Free Parking</div>
+          <div class="am-item"><div class="am-icon"><svg viewBox="0 0 24 24"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg></div>Kitchen</div>
+          <div class="am-item"><div class="am-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4.03 3 9 3s9-1.34 9-3v-6"/></svg></div>Hot Tub</div>
+        </div>
+        <button class="show-all">Show All 12 Amenities</button>
+      </div>
+
+      <hr />
+
+      <div style="margin-bottom:28px">
+        <h2 class="section-heading">What's near by</h2>
+        <div class="map-box">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224345.89!2d77.0441761!3d28.5275543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x37205b715389640!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1710000000000" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="nearby-grid">
+          <div class="nb-card"><div class="nb-img" style="background:#b5b4ff"></div><div class="nb-name">Cafe Dolma</div><div class="nb-desc">Eat tasty momos in a well lit space.</div></div>
+          <div class="nb-card"><div class="nb-img" style="background:#a4a3ee"></div><div class="nb-name">Cafe Dolma</div><div class="nb-desc">Eat tasty momos in a well lit space.</div></div>
+          <div class="nb-card"><div class="nb-img" style="background:#c0bfff"></div><div class="nb-name">Cafe Dolma</div><div class="nb-desc">Eat tasty momos in a well lit space.</div></div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div style="margin-bottom:28px">
+        <div class="gc-row">
+          <span class="gc-label">This space has served</span>
+          <span class="gc-num" id="guestCount" data-target="106">0</span>
+          <span class="gc-after">guests</span>
+        </div>
+        <div class="reviews">
+          <div class="review left"><span class="qm o">"</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et<span class="qm c">"</span></div>
+          <div class="review right"><span class="qm o">"</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation<span class="qm c">"</span></div>
+          <div class="review left"><span class="qm o">"</span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et<span class="qm c">"</span></div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div style="margin-bottom:8px">
+        <h2 class="section-heading">Things to know</h2>
+        <div class="ttk-grid">
+          <div class="ttk-item">
+            <div class="ttk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8.5" y1="15" x2="15.5" y2="15" stroke="#ef4444" stroke-width="2.5"/></svg></div>
+            <div class="ttk-title">Cancellation Policy</div>
+            <div class="ttk-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</div>
+            <span class="ttk-link">Learn More</span>
+          </div>
+          <div class="ttk-item">
+            <div class="ttk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8.5" y1="15" x2="15.5" y2="15" stroke="#ef4444" stroke-width="2.5"/></svg></div>
+            <div class="ttk-title">Cancellation Policy</div>
+            <div class="ttk-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</div>
+            <span class="ttk-link">Learn More</span>
+          </div>
+          <div class="ttk-item">
+            <div class="ttk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div>
+            <div class="ttk-title">House rules</div>
+            <div class="ttk-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</div>
+            <span class="ttk-link">Learn More</span>
+          </div>
+          <div class="ttk-item">
+            <div class="ttk-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div class="ttk-title">Safety &amp; Privacy</div>
+            <div class="ttk-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</div>
+            <span class="ttk-link">Learn More</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── UPDATED BOOKING CARD ── -->
+    <div class="bc-wrap">
+
+      <!-- Cab banner -->
+      <div class="cab-banner">
+        <svg viewBox="0 0 24 24">
+          <rect x="1" y="3" width="15" height="13" rx="2"/>
+          <path d="M16 8h2l3 5v3h-2"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+        Cab services available
+      </div>
+
+      <!-- Booking card -->
+      <div class="bc">
+        <div class="bc-title">Add dates for prices</div>
+
+        <!-- Combined single-border fields group -->
+        <div class="bc-fields-group">
+          <!-- Date field -->
+          <div class="bc-field">
+            <span>Add check-in and check-out dates</span>
+          </div>
+          <!-- Divider -->
+          <div class="bc-field-divider"></div>
+          <!-- Guest field -->
+          <div class="bc-field">
+            <span>Add guests</span>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+
+        <!-- Pill-shaped button -->
+        <button class="check-btn">Check availability</button>
+
+        <p class="contact-note">Any questions? <a href="/contact">Contact us directly</a></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="fi">
+    <div>
+      <div class="fb">Eden's Home</div>
+      <p class="ft">Curated luxury stays across India. Every property personally vetted for comfort, safety, and experience.</p>
+      <div class="fs">
+        <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
+        <a href="#"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>WhatsApp</a>
+      </div>
+    </div>
+    <div>
+      <div class="fct">Explore</div>
+      <div class="fl"><a href="#">All Properties</a><a href="#">Featured Stays</a><a href="#">New Listings</a><a href="#">Long-Term Stays</a><a href="#">Farmhouses</a><a href="#">City Apartments</a></div>
+    </div>
+    <div>
+      <div class="fct">Company</div>
+      <div class="fl"><a href="#">About Us</a><a href="#">Contact Us</a><a href="#">Blog</a><a href="#">Careers</a><a href="#">How It Works</a></div>
+    </div>
+    <div>
+      <div class="fct">Legal</div>
+      <div class="fl"><a href="#">Privacy Policy</a><a href="#">Terms &amp; Conditions</a><a href="#">Cancellation Policy</a><a href="#">Cookie Policy</a><a href="#">Refund Policy</a></div>
+    </div>
+  </div>
+  <div class="fbot">
+    <span>© 2026 Eden's Home Pvt. Ltd. All rights reserved.</span>
+    <span>Crafted with ❤️ in India</span>
+  </div>
+</footer>
+
+<script>
+// ── SEARCH OPEN / CLOSE ──────────────────────────────────
+function openSearch() {
+  document.getElementById('pill').classList.add('expanded');
+  document.getElementById('dropdown').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+function closeSearch() {
+  document.getElementById('pill').classList.remove('expanded');
+  document.getElementById('dropdown').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearch(); });
+
+// ── READ MORE ────────────────────────────────────────────
+let expanded = false;
+function toggleReadMore() {
+  const el = document.getElementById('spaceText');
+  const btn = document.getElementById('rmBtn');
+  expanded = !expanded;
+  if (expanded) { el.style.webkitLineClamp='unset'; el.style.display='block'; btn.textContent='Show Less'; }
+  else { el.style.webkitLineClamp='5'; el.style.display='-webkit-box'; btn.textContent='Read More'; }
+}
+
+// ── COUNT-UP ─────────────────────────────────────────────
+const countEl = document.getElementById('guestCount');
+let counted = false;
+
+new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting && !counted) {
+    counted = true;
+    const target = parseInt(countEl.dataset.target, 10);
+    const duration = 1200;
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      countEl.textContent = Math.floor(ease * target);
+      if (p < 1) requestAnimationFrame(step);
+      else countEl.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+}, { threshold: 0.6 }).observe(countEl);
+</script>
+</body>
+</html>

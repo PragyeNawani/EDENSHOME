@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Eden's Home | Curated Luxury Stays in India</title>
+<!-- Tailwind CSS v3 CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter for clean UI, Playfair Display for headers -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<style data-purpose="typography">
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    h1, h2, h3, .brand-font {
+      font-family: 'Playfair Display', serif;
+    }
+  </style>
+<style data-purpose="animations">
+    #search-container-wrapper {
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .search-bar-nav-state {
+      position: fixed !important;
+      top: 14px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      width: 100% !important;
+      max-width: 650px !important;
+      z-index: 100 !important;
+      padding: 0 !important;
+    }
+    .search-bar-nav-state #main-search-bar {
+      background: #ffffff !important;
+      border: 1px solid #e5e7eb !important;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+      height: 52px !important;
+    }
+    .hidden-dropdown {
+      display: none;
+    }
+    .expand-width {
+      max-width: 850px !important;
+    }
+    .field-transition {
+      transition: all 0.4s ease-out;
+      opacity: 0;
+      width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .field-expanded {
+      opacity: 1;
+      width: 160px;
+    }
+    .bg-fade {
+      transition: opacity 1s ease-in-out;
+    }
+  </style>
+<style data-purpose="ui-elements">
+    .property-card:hover img {
+      transform: scale(1.05);
+    }
+    .property-card img {
+      transition: transform 0.3s ease;
+    }
+    /* Custom scrollbar for dropdowns */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #e2e8f0;
+      border-radius: 10px;
+    }
+  </style>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/></head>
+<body class="bg-white text-gray-900">
+<!-- BEGIN: Navigation -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+<nav class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+<!-- Logo -->
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 bg-blue-400 rounded-full"></div>
+<span class="brand-font text-xl font-bold tracking-tight hidden md:block">Eden's Home</span>
+</div>
+<!-- Center Search Bar Placeholder (Hidden until triggered) -->
+<div class="flex-1 max-w-2xl px-8 opacity-0 pointer-events-none transition-opacity duration-300" id="nav-search-placeholder">
+<!-- The search bar will animate into this space -->
+</div>
+<!-- Right Nav Items -->
+<div class="flex items-center gap-6 text-sm font-medium">
+<a class="hover:text-gray-600 transition-colors" href="#">Add Experience</a>
+<a class="hover:text-gray-600 transition-colors" href="#">About</a>
+<button class="w-10 h-10 bg-black text-white rounded-full flex items-center justify-center">
+<span class="text-xs">P</span>
+</button>
+</div>
+</nav>
+</header>
+<!-- END: Navigation -->
+<!-- BEGIN: Hero Section -->
+<section class="relative h-[80vh] flex items-center justify-center overflow-hidden">
+<!-- Hero Background Image -->
+<div class="absolute inset-0 z-0"><img alt="Initial Bg" class="absolute inset-0 w-full h-full object-cover brightness-75 bg-fade" id="hero-bg-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3E9FdKlE0b7kf8tLglKenjaXzdO-n7MIf8cUr0HoDSc1xxYLVlEZP1ARTYBxIzOorslrgtTP2cUxKinDBqb07SgZyDFal2zuHk0zAMmn-kzNtU6Lp2hBmQvCyk628BRuHsLnc_fbN_iXKt4wiZMMXGKxs5qFFePjCGc64cpODdAm4hfoVwUjteMoS1wn_vXpPdEi6XS-2Ep_p3LYyWVnmbwR9YHnNB2Cp4uEFaVBGrU5C1_OEWLk13E8vIfPuGbPWBiMPmhpG6JK3"/>
+<img alt="New Bg" class="absolute inset-0 w-full h-full object-cover brightness-75 bg-fade opacity-0" id="hero-bg-2" src=""/></div>
+<!-- Centered Search Bar Initial State -->
+<div class="relative z-10 w-full max-w-4xl px-4" id="hero-search-wrapper">
+<div class="bg-white rounded-full shadow-2xl p-2 flex items-center cursor-pointer transition-all duration-500 border border-white/20 h-[66px]" id="main-search-bar">
+<div class="flex items-center w-full" id="search-inner-content">
+<!-- Location Step -->
+<div class="flex-1 flex items-center gap-3 px-6" id="trigger-destinations">
+<span class="material-symbols-outlined text-gray-400 text-lg" id="search-icon-leading">search</span>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider transition-all" id="label-where">Where</span>
+<span class="text-sm font-semibold" id="display-location">Europe</span>
+</div>
+</div>
+<!-- Hidden Steps (Dates & Guests) -->
+<div class="flex items-center field-transition" id="delayed-fields">
+<div class="h-8 w-px bg-gray-100"></div>
+<div class="flex flex-col px-6 cursor-pointer" id="trigger-dates">
+<span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">When</span>
+<span class="text-sm font-medium text-gray-700">Add dates</span>
+</div>
+<div class="h-8 w-px bg-gray-100"></div>
+<div class="flex flex-col px-6 cursor-pointer">
+<span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Who</span>
+<span class="text-sm font-medium text-gray-700">Add guests</span>
+</div>
+</div>
+<button class="bg-[#ef5d23] text-white w-12 h-12 rounded-full flex items-center justify-center ml-auto transition-all" id="search-btn-final">
+<span class="material-symbols-outlined text-xl">search</span>
+</button>
+</div>
+</div>
+<!-- Dropdown: Destinations (Hidden by default) -->
+<div class="hidden-dropdown absolute top-full left-0 right-0 mt-4 bg-white rounded-3xl shadow-2xl p-6 z-20 fade-in border border-gray-100" id="dropdown-destinations">
+<h3 class="text-xs font-bold text-gray-400 uppercase mb-4 px-2">Popular Regions</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="location-item p-3 rounded-xl hover:bg-gray-50 cursor-pointer flex flex-col gap-2 transition-colors">
+<div class="w-full aspect-square bg-gray-200 rounded-lg overflow-hidden">
+<img alt="Goa" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvRQWqa70vjgsfNHOv_CohmK7qRp0IRELnO8xmXIix-3ik218G49wHoPtIiEsfk7AWa0Fjdz4RPgac4DYLXy0ZWuYLLEVg8V000BXrK6YdZJ2uPpFbh3bfXVd_y-96-kZKLrx1XsgpGBCpAawPq0bX7OqqVATePIpqRnIKi9VizCop8N3giRWvaxfAMU7Mj7cSVXndQFZW1szSNyxmyDCSez2sb1-TLyp4f-Kn-YY3knDkccY27Fldm8mJIpjW1kJXvgAKJWSI-6lc"/>
+</div>
+<span class="text-sm font-medium">Goa</span>
+</div>
+<div class="location-item p-3 rounded-xl hover:bg-gray-50 cursor-pointer flex flex-col gap-2 transition-colors">
+<div class="w-full aspect-square bg-gray-200 rounded-lg overflow-hidden">
+<img alt="Mumbai" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBAv3uPAbiVzG7BCcavr0N97N2PWtcObMHrkIA_yWVFmOvbcXamDfwrsNcvXmd0DkYgXBEHW1sbZVq6h3KiY8WJS5KZWE9QIjaTSqbNm1v4PbDa4oLDRa8kJUoud-LBdp1ZLkZGj7g-dWxV_U71KmU-NsFqUt-6sK5UdOincTVT4wpaIbfUcLasthkajz9tzQh11Sqg6qfTTnKb6t-zgp8E7I_EsKFGMGIVVhDtKOwUNNbNp7PcjZ-LetTwEMNZ4fOCJ-3Gpy66EK0"/>
+</div>
+<span class="text-sm font-medium">Mumbai</span>
+</div>
+<div class="location-item p-3 rounded-xl hover:bg-gray-50 cursor-pointer flex flex-col gap-2 transition-colors">
+<div class="w-full aspect-square bg-gray-200 rounded-lg overflow-hidden">
+<img alt="Lonavala" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiU4vhD2of0LwQHYwldgJVVaa3RqbYoPChKPnd-DsnbNkC_9rshqB4dFnPu0voYLdXmN8I0iFVSDIiMeQ1e4lWA-2gA3Zr9pfBfhZAXLbnkSs9qnz0obdC9WMNznrbi2vggULw5uWamrz9KiuxmgDB1yymgVTh7KYlLjwcvQAG9Mu0rAkLMOM-XLXMXh9xcbRbNrKsSTutRrAOAM7openxqqgS8wRdulJ80OLQyFmhhej3UmAj1ntsnl4Ot7fbvSUXFLtFEkxPiG54"/>
+</div>
+<span class="text-sm font-medium">Lonavala</span>
+</div>
+<div class="location-item p-3 rounded-xl hover:bg-gray-50 cursor-pointer flex flex-col gap-2 transition-colors">
+<div class="w-full aspect-square bg-gray-200 rounded-lg overflow-hidden">
+<img alt="Delhi" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiytstI_Vebdx4_pkldIu9YJY0qqKgb3v_x24gKLaJsyxm3b0YclM88e-HTO9QziLticR7prgsQoJOsKXL_aj5NqVUe1a984hQliXSDfAI48js0p-yYPnbPBoy6wRon3HKCeSe6_7rFaX7oXOr21m6Q7OMoD_JxFmHpq_s6SymSmwY09o5ERTKSqo4hn8Gh0G4hqhSbB3HgHh0hVlnKaZstKOz2kR4MbdDVd_DSmLOnksKrIsXr0yMlgxsdI1aSlaqWjnBKWD0Mid_"/>
+</div>
+<span class="text-sm font-medium">Delhi</span>
+</div>
+</div>
+</div>
+<!-- Dropdown: Calendar (Hidden by default) -->
+<div class="hidden-dropdown absolute top-full left-1/2 -translate-x-1/2 mt-4 bg-white rounded-3xl shadow-2xl p-8 z-20 fade-in border border-gray-100 w-full max-w-2xl" id="dropdown-calendar">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-bold text-lg">Select dates</h3>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-gray-100 rounded-full">←</button>
+<button class="p-2 hover:bg-gray-100 rounded-full">→</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-8">
+<!-- Month 1 -->
+<div>
+<p class="font-semibold text-center mb-4">October 2026</p>
+<div class="grid grid-cols-7 gap-1 text-center text-xs">
+<div class="text-gray-400 py-1">Su</div><div class="text-gray-400 py-1">Mo</div><div class="text-gray-400 py-1">Tu</div><div class="text-gray-400 py-1">We</div><div class="text-gray-400 py-1">Th</div><div class="text-gray-400 py-1">Fr</div><div class="text-gray-400 py-1">Sa</div>
+<!-- Calendar days placeholder -->
+<div class="py-2 hover:bg-gray-100 rounded-full cursor-pointer">1</div>
+<div class="py-2 hover:bg-gray-100 rounded-full cursor-pointer">2</div>
+<div class="py-2 hover:bg-gray-100 rounded-full cursor-pointer">3</div>
+<div class="py-2 bg-black text-white rounded-full cursor-pointer">4</div>
+<div class="py-2 bg-gray-100 rounded-full cursor-pointer">5</div>
+<div class="py-2 bg-gray-100 rounded-full cursor-pointer">6</div>
+<div class="py-2 bg-black text-white rounded-full cursor-pointer">7</div>
+</div>
+</div>
+<!-- Month 2 -->
+<div>
+<p class="font-semibold text-center mb-4">November 2026</p>
+<div class="grid grid-cols-7 gap-1 text-center text-xs">
+<div class="text-gray-400 py-1">Su</div><div class="text-gray-400 py-1">Mo</div><div class="text-gray-400 py-1">Tu</div><div class="text-gray-400 py-1">We</div><div class="text-gray-400 py-1">Th</div><div class="text-gray-400 py-1">Fr</div><div class="text-gray-400 py-1">Sa</div>
+<!-- Dates loop... -->
+<div class="py-2 hover:bg-gray-100 rounded-full cursor-pointer">1</div><div class="py-2 hover:bg-gray-100 rounded-full cursor-pointer">2</div><div class="py-2 hover:bg-gray-100 rounded-full cursor-pointer">3</div>
+</div>
+</div>
+</div>
+<div class="mt-6 flex justify-end">
+<button class="px-6 py-2 bg-black text-white rounded-full text-sm" id="close-calendar">Apply</button>
+</div>
+</div>
+</div>
+<!-- Call to action arrow from image -->
+<div class="absolute bottom-10 flex flex-col items-center gap-2 text-white pointer-events-none">
+<span class="text-sm font-medium tracking-wide">Find Stays</span>
+<svg class="w-6 h-6 animate-bounce" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 14l-7 7m0 0l-7-7m7 7V3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+</section>
+<!-- END: Hero Section -->
+<!-- BEGIN: Content - Handpicked Homes -->
+<main class="max-w-7xl mx-auto px-4 py-16">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-3xl font-bold flex items-center gap-3">
+        Hand picked homes
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</h2>
+</div>
+<!-- 4-Card Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+<!-- Property Card 1 -->
+<div class="property-card group cursor-pointer" data-purpose="property-card">
+<div class="aspect-[4/3] rounded-2xl overflow-hidden mb-3 bg-gray-100">
+<img alt="Property" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAUIUk0Pfqkec6E_h_mtxhDjr_b4jEz8mTcLvUEfxrytcB3qLcJTZF4q605VMDJUPBZwmLyQaR_d8gcdEnk7P7EpvCWls525YnaTPYnQU4FtoNGJ7xpY3PiWLYyn6VSnbIBtaztDROgfAD9bgTWOEeCq6EloNNJ0YEoHcUwiM-ivyA5HI9ntQUAB-qvp-4qXofIRAq4Cg0vF88PRd9SPSsUqzLfcq-w9IyqnRMUg2gbXwga3thvPhZ7ZamfNqhEsqpHuAGgHvdPERQ"/>
+</div>
+<h3 class="font-semibold text-lg">Sunrise Farms</h3>
+<p class="text-sm text-gray-500 mb-1 flex items-center gap-1">
+<svg class="w-3 h-3" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" fill-rule="evenodd"></path></svg>
+          Gurugram
+        </p>
+<p class="font-bold">₹6,000 <span class="text-gray-400 font-normal text-sm">/ 2 nights</span></p>
+</div>
+<!-- Property Card 2 -->
+<div class="property-card group cursor-pointer">
+<div class="aspect-[4/3] rounded-2xl overflow-hidden mb-3 bg-gray-100">
+<img alt="Property" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9U8NJSg8s9QjJ_C3rty82ytibHMmRPyv_1E7JX6Yxplan2G49DIuIYt15OxVQbdq2zAb1ZWA5aFClvATO9CGbNND93fdQYeC_gEdDRmlZOjf7rRTzN_6qPHSM_VHJL5FJXN62tQatAeJrSY8BtmtnMacFR-Pr8quT5WzOTVQRamp6CUddlFpOn6EgP3op5ZRMLy3BUqX7wqrIVv_cQm2JrzBq2HVOCbOFnm2C-ZfJduwTFvGWhBpnls94RMIMPZjU5yF_F15yl12E"/>
+</div>
+<h3 class="font-semibold text-lg">The Blue Door</h3>
+<p class="text-sm text-gray-500 mb-1 flex items-center gap-1">
+<svg class="w-3 h-3" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" fill-rule="evenodd"></path></svg>
+          Goa
+        </p>
+<p class="font-bold">₹8,500 <span class="text-gray-400 font-normal text-sm">/ 2 nights</span></p>
+</div>
+<!-- Property Card 3 -->
+<div class="property-card group cursor-pointer">
+<div class="aspect-[4/3] rounded-2xl overflow-hidden mb-3 bg-gray-100">
+<img alt="Property" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkeIhb2ei3UwL5_XLVQQDSoyfPWLmZPgmdzdWLfTPXbvta89uTX0bzxKIsz5cqsUxFfj25dtcU2B7JRD3Bfd4QXWnughHmR0RLhWAIN-JxnDdPdKFyGhWyD75oWR6RmSq8aNIWuhEyWWSh6JdRyTk4TK_xcDKOnurxNVLHqX8hs_2DX8yqJTehWTkBKNS8Kpm3VyUi-SdKOazBlK1n6vd3tMCkGxPCqAMknov0IPw7aHQKZKj_4iL52jsJ-zzQEpXDGg-gO1PTNM31"/>
+</div>
+<h3 class="font-semibold text-lg">Hilltop Manor</h3>
+<p class="text-sm text-gray-500 mb-1 flex items-center gap-1">
+<svg class="w-3 h-3" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" fill-rule="evenodd"></path></svg>
+          Kasauli
+        </p>
+<p class="font-bold">₹12,000 <span class="text-gray-400 font-normal text-sm">/ 2 nights</span></p>
+</div>
+<!-- Property Card 4 -->
+<div class="property-card group cursor-pointer">
+<div class="aspect-[4/3] rounded-2xl overflow-hidden mb-3 bg-gray-100">
+<img alt="Property" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqLpqHpqVOwnIyDii4gwdZ93kun9OyTG56kQS5t7godE-dqJSSdF2qA38HLPID3hoBjM4LpurRDPki5T7zt3PplYBNDJWX0ni0ba2jQu0uCr5FDV7QJpXT0-G_tvAM93neRTuvvNZDHg1aHKpF3FwFe5iAcKMRzcnQYf2voWSfd44hziNNPLCX5KJXuwbm8STGlDW_XGTVkdoIFb8hfttvl3qPwcQnpRqhtUXw-Zl0Hw01H8z66vxg0O3gpNFA0cCekGGzjonlRnyd"/>
+</div>
+<h3 class="font-semibold text-lg">Riverside Cabin</h3>
+<p class="text-sm text-gray-500 mb-1 flex items-center gap-1">
+<svg class="w-3 h-3" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" fill-rule="evenodd"></path></svg>
+          Rishikesh
+        </p>
+<p class="font-bold">₹7,200 <span class="text-gray-400 font-normal text-sm">/ 2 nights</span></p>
+</div>
+</div>
+<!-- BEGIN: Featured Homes -->
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-3xl font-bold flex items-center gap-3">
+        Featured homes
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Big Card 1 -->
+<div class="property-card group cursor-pointer">
+<div class="aspect-[4/5] rounded-3xl overflow-hidden mb-4 relative">
+<img alt="Featured" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSzElpBTvhk3k67IPPCZTOnD9lE52ih2Iw_ntV6UwwHIXhL0haEz5uD2ztD67vi2yfXzNd3nZUHWIGCb43QjlDr0GAb3DGj_7O6hhkh8RniezC7hf6L5BExvYg6HS6sYV92PM1bzQHEuzIa78A28WaWqj5sJWAJA7yS6xNbC3lLdIkJb-vhUeBEjgZYXcc7UfUzNjW4xkVqWQCTTlSNmJAC7O2bPvW8S06TW8HXrXYtQCbSTCz2-r2S-XiiTsthPLmedC_EF0w1J8T"/>
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Premium</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-xl">The Glass House</h3>
+<p class="text-gray-500 text-sm">2 Bedrooms • 1 Bath • 4 Guests</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-lg">₹7,999<span class="text-sm font-normal text-gray-500"> /night</span></p>
+</div>
+</div>
+</div>
+<!-- Big Card 2 -->
+<div class="property-card group cursor-pointer">
+<div class="aspect-[4/5] rounded-3xl overflow-hidden mb-4 relative">
+<img alt="Featured" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBag954Vi4tqEMX-ZMCLuVn2ez5dEF9zVY_oY4Wi9LxJnDHiaAVN6uDaU2a-2jUiICk0deOTaFVO86EDlGrQEYpIvn_BGJbmUE2vWFUBnPa7fT_D0dSNLHTGc8yCS3j8Zo1nP5HDQZbLZylu34DtIW9tNySuLqNwGtD0ddVtMpQ-e84GfHQ6TN6qpbTldWbnXddUh7IHRN6a74Smomb5Frhtvm-nkvHmcfEnYb0MdmOtJF9C54RHwaz6UuEojU-wRNIsv1HkOE8VA-h"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-xl">The Oasis Villa</h3>
+<p class="text-gray-500 text-sm">4 Bedrooms • 4 Bath • 10 Guests</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-lg">₹15,999<span class="text-sm font-normal text-gray-500"> /night</span></p>
+</div>
+</div>
+</div>
+<!-- Big Card 3 -->
+<div class="property-card group cursor-pointer">
+<div class="aspect-[4/5] rounded-3xl overflow-hidden mb-4 relative">
+<img alt="Featured" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1ImhEPJa5vcNVlWSicdA53qXJn80nsZe9lmR8RPU_Gz2rYz7ocM8HagfU5acFlaG4l_Lk0L7oTT1JM4U5krRX_bS55CQ-bkPtU4gHN8XcRmfWldBqZ_6DAJ2TStHTi6t-yeG7NhOonEeV1zxg4hDTAXDYSngZm02gk86mcUFohOXanpIbzDdw0y9M6fsEMI81Cgx5szZkBz2glqRbgze-j2QfD4pu9SxcCoIhdww4wyTIb26iaQ4lDTK6iBL_CH5joJn8s-frdfDw"/>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-bold text-xl">Mountain Echo</h3>
+<p class="text-gray-500 text-sm">3 Bedrooms • 2 Bath • 6 Guests</p>
+</div>
+<div class="text-right">
+<p class="font-bold text-lg">₹12,499<span class="text-sm font-normal text-gray-500"> /night</span></p>
+</div>
+</div>
+</div>
+</div>
+<!-- END: Featured Homes -->
+</main>
+<!-- END: Content -->
+<!-- BEGIN: Footer -->
+<footer class="bg-black text-white py-20 px-4 mt-20">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+<!-- Brand Info -->
+<div class="space-y-6">
+<h2 class="brand-font text-3xl font-bold">Eden's Home</h2>
+<p class="text-gray-400 leading-relaxed text-sm max-w-xs">
+            Curated luxury stays across India. Every property personally vetted for comfort, safety, and experience.
+          </p>
+<div class="flex flex-col gap-4 pt-4">
+<a class="flex items-center gap-3 text-sm hover:text-white text-gray-400 transition-colors" href="#">
+<svg class="w-5 h-5 text-blue-400" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+              Instagram
+            </a>
+<a class="flex items-center gap-3 text-sm hover:text-white text-gray-400 transition-colors" href="#">
+<svg class="w-5 h-5 text-blue-400" fill="currentColor" viewbox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.586 4.391 1.696 6.305l-.973 3.546 3.766-.988zm11.491-7.093c-.3-.149-1.774-.875-2.048-.976-.275-.1-.475-.149-.675.149-.2.3-.776.976-.951 1.176-.175.2-.35.225-.65.075-.3-.15-1.266-.467-2.411-1.485-.892-.795-1.492-1.779-1.667-2.079-.175-.3-.019-.462.13-.611.135-.133.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.675-1.625-.925-2.225-.244-.589-.491-.51-.675-.519l-.575-.01c-.2 0-.525.075-.8.375-.275.3-1.05 1.026-1.05 2.501s1.075 2.901 1.225 3.101c.15.2 2.115 3.227 5.125 4.525.715.309 1.274.494 1.708.632.719.228 1.373.195 1.891.118.577-.089 1.774-.726 2.024-1.426.25-.7.25-1.3.175-1.426-.075-.125-.275-.2-.575-.35z"></path></svg>
+              WhatsApp
+            </a>
+</div>
+</div>
+<!-- Links Columns -->
+<div>
+<h4 class="font-bold text-xs uppercase tracking-widest mb-6 border-b border-gray-800 pb-2">Explore</h4>
+<ul class="space-y-4 text-sm text-gray-400">
+<li><a class="hover:text-white transition-colors" href="#">All Properties</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Featured Stays</a></li>
+<li><a class="hover:text-white transition-colors" href="#">New Listings</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Long-Term Stays</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Farmhouses</a></li>
+<li><a class="hover:text-white transition-colors" href="#">City Apartments</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-xs uppercase tracking-widest mb-6 border-b border-gray-800 pb-2">Company</h4>
+<ul class="space-y-4 text-sm text-gray-400">
+<li><a class="hover:text-white transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Contact Us</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Blog</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-white transition-colors" href="#">How It Works</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-xs uppercase tracking-widest mb-6 border-b border-gray-800 pb-2">Legal</h4>
+<ul class="space-y-4 text-sm text-gray-400">
+<li><a class="hover:text-white transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Terms &amp; Conditions</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Cancellation Policy</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Cookie Policy</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Refund Policy</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
+<p>© 2026 Eden's Home Pvt. Ltd. All rights reserved.</p>
+<p class="flex items-center gap-1">Crafted with <span class="text-red-500">❤</span> in India</p>
+</div>
+</div>
+</footer>
+<!-- END: Footer -->
+<script data-purpose="interaction-logic">
+    const mainSearch = document.getElementById('main-search-bar');
+    const heroSearchWrapper = document.getElementById('hero-search-wrapper');
+    const dropdownDestinations = document.getElementById('dropdown-destinations');
+    const locationItems = document.querySelectorAll('.location-item');
+    const displayLocation = document.getElementById('display-location');
+    const delayedFields = document.getElementById('delayed-fields');
+    const labelWhere = document.getElementById('label-where');
+    const heroBg1 = document.getElementById('hero-bg-1');
+    const heroBg2 = document.getElementById('hero-bg-2');
+
+    // Step 1: Click search bar -> Move to top + Show Locations
+    mainSearch.addEventListener('click', (e) => {
+      if (!heroSearchWrapper.classList.contains('search-bar-nav-state')) {
+        heroSearchWrapper.classList.add('search-bar-nav-state');
+        dropdownDestinations.classList.remove('hidden-dropdown');
+        labelWhere.style.fontSize = '8px';
+      }
+    });
+
+    // Step 2 & 3: Select location -> Close dropdown + Change Background
+    locationItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const locName = item.querySelector('span').innerText;
+        const locImg = item.querySelector('img').src;
+        
+        displayLocation.innerText = locName;
+        dropdownDestinations.classList.add('hidden-dropdown');
+
+        // Background image change
+        heroBg2.src = locImg;
+        heroBg2.classList.remove('opacity-0');
+        heroBg1.classList.add('opacity-0');
+
+        // Step 4: 2s delay -> Expand other fields
+        setTimeout(() => {
+           heroSearchWrapper.classList.add('expand-width');
+           delayedFields.classList.add('field-expanded');
+        }, 2000);
+      });
+    });
+  </script>
+</body></html>
